@@ -1,0 +1,21 @@
+.d-grid, .grid-cols-large, .grid-cols-medium, .grid-cols-small, .action-box {
+    display: grid;
+}
+
+.grid-cols-large {
+    row-gap: $gutter;
+}
+
+.grid-cols-medium {
+    row-gap: $base-indent;
+}
+
+.grid-cols-small {
+    row-gap: $half-indent;
+}
+
+.action-box {
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
+    column-gap: $base-indent;
+}

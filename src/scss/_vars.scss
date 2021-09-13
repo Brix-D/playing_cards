@@ -1,0 +1,76 @@
+$spacer: 4px;
+
+// Indent's
+$gutter: $spacer * 6;
+$base-indent: $spacer * 4;
+$half-indent: $spacer * 3;
+
+$colors: (
+    'accent': #ff5640,
+    'primary': #101928,
+    'secondary': #dee3e7,
+    'success': #34c759,
+    'info': #4395fd,
+    'warning': #ffc107,
+    'error': #ff2d55,
+    'purple': #5856d6,
+    'muted': #eef0f2,
+    'white': #fff
+);
+
+//Base Variables
+$color-accent: map-get($colors, 'accent');
+$color-primary: map-get($colors, 'primary');
+$color-secondary: map-get($colors, 'secondary');
+$color-success: map-get($colors, 'success');
+$color-info: map-get($colors, 'info');
+$color-warning: map-get($colors, 'warning');
+$color-error: map-get($colors, 'error');
+$color-purple: map-get($colors, 'purple');
+$color-muted: map-get($colors, 'muted');
+
+//plain color
+
+$colors-plain: (
+    'accent': #ffeeec,
+    'primary': #e7e8ea,
+    'secondary': #fefeff,
+    'success': #ebf9ee,
+    'info': #ecf4ff,
+    'warning': #fff9e6,
+    'error': #ffeaee,
+    'purple': #f5ebfc,
+    'white': #fff,
+);
+
+$color-accent-plain: map-get($colors-plain, 'accent');
+$color-primary-plain: map-get($colors-plain, 'primary');
+$color-secondary-plain: map-get($colors-plain, 'secondary');
+$color-success-plain: map-get($colors-plain, 'success');
+$color-info-plain: map-get($colors-plain, 'info');
+$color-warning-plain: map-get($colors-plain, 'warning');
+$color-error-plain: map-get($colors-plain, 'error');
+$color-purple-plain: map-get($colors-plain, 'purple');
+$color-white-plain: map-get($colors-plain, 'white');
+
+
+$color-link: $color-info;
+$color-text: $color-primary;
+$color-text-secondary: #67768c;
+
+$color-disabled: $color-muted;
+$color-disabled-text: $color-text-secondary;
+
+$color-border: #dee3e7;
+$color-border-opacity: #ffffff1e;
+$color-border-light: $color-muted;
+$color-shadow: rgba($color-text-secondary, 0.4);
+
+
+$border: 1px solid $color-border;
+$border-opacity: 1px solid $color-border-opacity;
+$border-dashed: 1px dashed $color-border-light;
+$color-bg: #fff;
+$color-bg-gray: #f7f5fd;
+
+$border-radius: ('large': 16px, 'medium': 8px, 'small': 6px);
