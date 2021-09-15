@@ -12,9 +12,7 @@ export default {
 
   components: {},
 
-  methods: {
-
-  },
+  methods: {},
 };
 </script>
 
