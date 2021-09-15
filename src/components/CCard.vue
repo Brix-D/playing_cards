@@ -13,6 +13,10 @@
 export default {
   name: 'CCard',
   props: {
+    columnIndex: {
+      type: Number,
+      required: true,
+    },
     shirtImage: {
       type: String,
       required: true,
@@ -21,11 +25,16 @@ export default {
       type: String,
       required: true,
     },
+    flipped: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       baseImage: 'assets',
-      flipped: false,
+
     };
   },
   computed: {},
@@ -33,8 +42,8 @@ export default {
     getImage(name) {
       return require(`@/${this.baseImage}/${name}`);
     },
-    flipCard() {
-      this.flipped = !this.flipped;
+    flipCard(event) {
+      this.$emit('flip', { event, index: this.columnIndex, value: !this.flipped });
     },
   },
 };

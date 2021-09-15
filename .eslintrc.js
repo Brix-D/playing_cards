@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: [
     'plugin:vue/essential',
-    //"plugin:prettier/recommended",
+    //'plugin:prettier/recommended',
     'eslint:recommended',
     'prettier',
   ],
@@ -17,6 +17,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-unused-vars': 'off',
     indent: ['error', 2],
+    quotes: ['warn', 'single'],
     // "vue/html-indent": ["error", 2, {
     //   "attribute": 1,
     //   "baseIndent": 1,
