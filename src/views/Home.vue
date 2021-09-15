@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="container">
-        <div v-for="i in 6" :key="i">s</div>
+      <div v-for="i in 6" :key="i">s</div>
     </div>
   </div>
 </template>
@@ -11,8 +11,7 @@
 
 export default {
   name: "Home",
-  components: {
-  },
+  components: {},
 };
 </script>
 
