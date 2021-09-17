@@ -1,10 +1,11 @@
 <template>
-  <div class="card" @click="flipCard">
+  <div class="card" @click="flipCard" >
     <div class="card__shirt" :class="{ 'card__shirt--flipped': flipped }">
-      <img :src="getImage(back)" class="card__image" alt="рубашка" />
+      <img :src="getImage(back)" class="card__image" alt="рубашка"/>
+<!--      @dragstart="onDragStart($event)" -->
     </div>
     <div class="card__front" :class="{ 'card__front--flipped': flipped }">
-      <img :src="getImage(front)" class="card__image" alt="карта" />
+      <img :src="getImage(front)" class="card__image" alt="карта"/>
     </div>
   </div>
 </template>
@@ -54,6 +55,10 @@ export default {
     flipCard() {
       this.FLIP_CARD({ idColumn: this.columnIndex, idCard: this.id});
     },
+
+    // onDragStart(event) {
+    //   this.$emit('dragstart', event);
+    // },
   },
 };
 </script>
@@ -64,6 +69,7 @@ export default {
   width: 100%;
   transform-style: preserve-3d;
   cursor: pointer;
+
 
   &__shirt {
     position: absolute;
@@ -88,6 +94,7 @@ export default {
   &__image {
     width: 100%;
     height: auto;
+    pointer-events: none;
   }
 }
 </style>
