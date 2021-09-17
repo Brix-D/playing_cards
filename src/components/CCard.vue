@@ -1,15 +1,17 @@
 <template>
   <div class="card" @click="flipCard">
     <div class="card__shirt" :class="{ 'card__shirt--flipped': flipped }">
-      <img :src="getImage(shirtImage)" class="card__image" alt="рубашка" />
+      <img :src="getImage(back)" class="card__image" alt="рубашка" />
     </div>
     <div class="card__front" :class="{ 'card__front--flipped': flipped }">
-      <img :src="getImage(frontImage)" class="card__image" alt="карта" />
+      <img :src="getImage(front)" class="card__image" alt="карта" />
     </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'CCard',
   props: {
@@ -17,11 +19,15 @@ export default {
       type: Number,
       required: true,
     },
-    shirtImage: {
+    id: {
+      type: Number,
+      required: true,
+    },
+    back: {
       type: String,
       required: true,
     },
-    frontImage: {
+    front: {
       type: String,
       required: true,
     },
@@ -42,8 +48,11 @@ export default {
     getImage(name) {
       return require(`@/${this.baseImage}/${name}`);
     },
-    flipCard(event) {
-      this.$emit('flip', { event, index: this.columnIndex, value: !this.flipped });
+    ...mapMutations({
+      FLIP_CARD: 'field/FLIP_CARD',
+    }),
+    flipCard() {
+      this.FLIP_CARD({ idColumn: this.columnIndex, idCard: this.id});
     },
   },
 };

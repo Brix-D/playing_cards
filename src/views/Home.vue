@@ -2,18 +2,17 @@
   <div class="home">
     <div class="container">
       <CCardColumn
-        v-for="(item, index) in columns"
-        :key="index"
-        :cards-list="item"
-      >
-        s
-      </CCardColumn>
+        v-for="item in COLUMNS"
+        :key="item.id"
+        :cards-list="item.data"
+        :column-id="item.id"
+       />
     </div>
   </div>
 </template>
 
 <script>
-// import CCard from '@/components/CCard';
+import { mapState } from 'vuex';
 import CCardColumn from '@/components/CCardColumn';
 export default {
   name: 'Home',
@@ -30,173 +29,14 @@ export default {
 
   data() {
     return {
-      columns: [
-        // 1
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 2
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 3
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 4
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 5
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 6
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 7
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-        // 8
-        [
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-          {
-            cardValue: 'Queen',
-            suit: 'heart',
-            front: 'card_queen.png',
-            back: 'card_wrapper.jpg',
-          },
-        ],
-      ],
     };
   },
 
+  computed: {
+    ...mapState({
+      COLUMNS: (state) => state.field.field,
+    }),
+  },
   methods: {},
 };
 </script>

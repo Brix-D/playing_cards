@@ -2,25 +2,11 @@
   <div class="column">
     <template v-for="(item, index) in cardsList">
       <CCard
-        v-if="flippedLastCard && isLastCard(index)"
-        flipped
-        :key="index"
-        :column-index="index"
-        @flip="onFlipCard"
-        :front-image="item.front"
-        :shirt-image="item.back"
+        v-bind="item"
+        :column-index="columnId"
+        :key="item.id"
         class="column__card"
         :style="'top:' + getIndent(index)"
-      />
-      <CCard
-          v-else
-          :column-index="index"
-          :key="index"
-          @flip="onFlipCard"
-          :front-image="item.front"
-          :shirt-image="item.back"
-          class="column__card"
-          :style="'top:' + getIndent(index)"
       />
     </template>
   </div>
@@ -35,7 +21,6 @@ export default {
   data() {
     return {
       baseIndent: 24,
-      flippedLastCard: false,
     }
   },
 
@@ -43,8 +28,18 @@ export default {
     CCard,
   },
   props: {
-    cardsList: [],
+    columnId: {
+      type: Number,
+      required: true
+    },
+    cardsList: {
+      type: Array,
+      required: true,
+    },
   },
+  // mounted() {
+  //   console.log('column', this.cardsList);
+  // },
   computed: {
 
   },
@@ -52,11 +47,7 @@ export default {
     getIndent(index) {
       return `${index * this.baseIndent}px`;
     },
-    onFlipCard(event) {
-      if (this.isLastCard(event.index)) {
-        this.flippedLastCard = event.value;
-      }
-    },
+
     isLastCard(index) {
       return this.cardsList.length-1 === index;
     }
