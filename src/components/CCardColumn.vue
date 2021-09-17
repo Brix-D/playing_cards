@@ -11,6 +11,7 @@
         :style="'top:' + getIndent(index)"
         :draggable="item.flipped"
         @dragstart.native="onDragStart($event, index, columnId)"
+        @click.native="onFlipCard($event, columnId, index)"
       />
     </template>
   </div>
@@ -49,6 +50,7 @@ export default {
     ...mapMutations({
       REMOVE_FROM_COLUMN: 'field/REMOVE_FROM_COLUMN',
       ADD_TO_COLUMN: 'field/ADD_TO_COLUMN',
+      FLIP_CARD: 'field/FLIP_CARD',
     }),
 
     getIndent(index) {
@@ -82,7 +84,9 @@ export default {
       };
       event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
     },
-
+    onFlipCard($event, idColumn, rowIndex) {
+      this.FLIP_CARD({ idColumn, idCard: rowIndex});
+    }
   },
 };
 </script>

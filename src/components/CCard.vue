@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="flipCard" >
+  <div class="card" >
     <div class="card__shirt" :class="{ 'card__shirt--flipped': flipped }">
       <img :src="getImage(back)" class="card__image" alt="рубашка"/>
 <!--      @dragstart="onDragStart($event)" -->
@@ -11,15 +11,10 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 
 export default {
   name: 'CCard',
   props: {
-    columnIndex: {
-      type: Number,
-      required: true,
-    },
     id: {
       type: Number,
       required: true,
@@ -49,16 +44,7 @@ export default {
     getImage(name) {
       return require(`@/${this.baseImage}/${name}`);
     },
-    ...mapMutations({
-      FLIP_CARD: 'field/FLIP_CARD',
-    }),
-    flipCard() {
-      this.FLIP_CARD({ idColumn: this.columnIndex, idCard: this.id});
-    },
 
-    // onDragStart(event) {
-    //   this.$emit('dragstart', event);
-    // },
   },
 };
 </script>

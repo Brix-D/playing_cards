@@ -239,9 +239,7 @@ export const mutations = {
   FLIP_CARD(state, { idColumn, idCard }) {
     let card;
     try {
-      card = state.field
-        .find((column) => column.id === idColumn)
-        .data.find((card) => card.id === idCard);
+      card = state.field.find((column) => column.id === idColumn).data[idCard];
     } catch (e) {
       console.log('column not found', idColumn);
     }
