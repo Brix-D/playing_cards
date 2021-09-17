@@ -6,11 +6,11 @@
       <CCard
         v-bind="item"
         :column-index="columnId"
-        :key="item.id"
+        :key="String(columnId) + index"
         class="column__card"
         :style="'top:' + getIndent(index)"
         :draggable="item.flipped"
-        @dragstart.native="onDragStart($event, index)"
+        @dragstart.native="onDragStart($event, index, columnId)"
       />
     </template>
   </div>
@@ -18,6 +18,7 @@
 
 <script>
 import CCard from '@/components/CCard';
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'CColumn',
@@ -41,13 +42,15 @@ export default {
       required: true,
     },
   },
-  // mounted() {
-  //   console.log('column', this.cardsList);
-  // },
   computed: {
 
   },
   methods: {
+    ...mapMutations({
+      REMOVE_FROM_COLUMN: 'field/REMOVE_FROM_COLUMN',
+      ADD_TO_COLUMN: 'field/ADD_TO_COLUMN',
+    }),
+
     getIndent(index) {
       return `${index * this.baseIndent}px`;
     },
@@ -56,18 +59,30 @@ export default {
       return this.cardsList.length-1 === index;
     },
 
-    onDrop(event, columnId) {
+    onDrop(event, idColumn) {
       const draggingData = event.dataTransfer.getData('text/plain');
-      const draggingCards = JSON.parse(draggingData);
+      const draggingDataParsed = JSON.parse(draggingData);
+      console.log('draggingDataParsed', draggingDataParsed);
+      this.REMOVE_FROM_COLUMN({
+        indexRow: draggingDataParsed.originColumnRowIndex,
+        idColumn: draggingDataParsed.originColumnIndex,
+      });
+      this.ADD_TO_COLUMN({ idColumn, items: draggingDataParsed.cardsToDrag});
     },
 
-    onDragStart(event, index) {
+    onDragStart(event, originColumnRowIndex, originColumnIndex) {
       event.dataTransfer.dropEffect = 'move';
       event.dataTransfer.effectAllowed = 'move';
-      const cardsToDrag = this.cardsList.slice(index);
-      console.log('cardsToDrag', cardsToDrag);
-      event.dataTransfer.setData('text/plain', JSON.stringify(cardsToDrag));
+      const cardsToDrag = this.cardsList.slice(originColumnRowIndex);
+
+      const dragData = {
+        originColumnRowIndex,
+        originColumnIndex,
+        cardsToDrag
+      };
+      event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
     },
+
   },
 };
 </script>

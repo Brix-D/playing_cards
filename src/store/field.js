@@ -251,6 +251,14 @@ export const mutations = {
       console.log('card not found', idCard);
     }
   },
+
+  REMOVE_FROM_COLUMN(state, { idColumn, indexRow }) {
+    state.field.find((column) => column.id === idColumn).data.splice(indexRow);
+  },
+
+  ADD_TO_COLUMN(state, { idColumn, items }) {
+    state.field.find((column) => column.id === idColumn).data.push(...items);
+  },
 };
 
 export const actions = {};
