@@ -9,7 +9,10 @@
        />
 
     </div>
-    <button @click="newGame">Новая игра</button>
+    <div class="actions">
+      <button @click="newGame">Новая игра</button>
+      <button @click="resetGame">Начать с начала</button>
+    </div>
   </div>
 </template>
 
@@ -42,9 +45,13 @@ export default {
   methods: {
     ...mapActions({
       NEW_GAME: 'field/GENERATE_FIELD',
+      RESET_GAME: 'field/RESET_FIELD',
     }),
     newGame() {
       this.NEW_GAME({});
+    },
+    resetGame() {
+      this.RESET_GAME();
     },
   },
 };

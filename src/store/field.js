@@ -1,5 +1,6 @@
 import deck from '../utils/deck';
 import shuffle from '../utils/shuffle';
+import copyObject from '../utils/copyObject';
 
 export const state = () => ({
   /**
@@ -294,7 +295,6 @@ export const actions = {
       let shuffledArray = shuffle(spades);
       let indexColumn = 0;
       const deck = shuffledArray.reduce((acc, item) => {
-        //for (let indexColumn = 1; indexColumn <=8; indexColumn++) {
 
         // если колонка не существует - создать колонку
         if (!acc[indexColumn]) {
@@ -313,8 +313,7 @@ export const actions = {
           suit: 'spades',
           flipped: false,
         });
-        //}
-        // каждые восемь итераций индекс колонки должен сбрасыватся на ноль
+        // каждые десять итераций индекс колонки должен сбрасыватся на ноль
         indexColumn = (indexColumn + 11) % 10 === 0 ? 0 : indexColumn+1 ;
         return acc;
       }, []);
@@ -324,9 +323,12 @@ export const actions = {
     }
   },
 
-  RESET_FIELD({ commit }) {},
+  RESET_FIELD({ commit, state }) {
+    commit('SET_FIELD', state.initial);
+  },
 };
 
-export const getters = {};
+export const getters = {
+};
 
 export default { namespaced: true, state, mutations, actions, getters };
