@@ -238,11 +238,11 @@ export const state = () => ({
 
 export const mutations = {
   SET_FIELD(state, items) {
-    state.items = [...items];
+    state.items = JSON.parse(JSON.stringify(items));
   },
 
   SET_INIT_FIELD(state, items) {
-    state.initial = [...items];
+    state.initial = JSON.parse(JSON.stringify(items));
   },
 
   FLIP_CARD(state, { idColumn, idCard }) {
