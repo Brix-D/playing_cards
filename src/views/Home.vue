@@ -7,12 +7,14 @@
         :cards-list="item.data"
         :column-id="item.id"
        />
+
     </div>
+    <button @click="newGame">Новая игра</button>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import CCardColumn from '@/components/CCardColumn';
 export default {
   name: 'Home',
@@ -37,14 +39,21 @@ export default {
       COLUMNS: (state) => state.field.items,
     }),
   },
-  methods: {},
+  methods: {
+    ...mapActions({
+      NEW_GAME: 'field/GENERATE_FIELD',
+    }),
+    newGame() {
+      this.NEW_GAME({});
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .container {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   column-gap: $gutter;
 }
 </style>

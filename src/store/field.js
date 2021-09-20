@@ -1,47 +1,57 @@
+import deck from '../utils/deck';
+import shuffle from '../utils/shuffle';
+
 export const state = () => ({
+  /**
+   * начальное состояние поля
+   */
+  initial: [],
+  /**
+   * текущее состояние поля
+   */
   items: [
-    {
-      id: 1,
-      // 1
-      data: [
-        {
-          id: 1,
-          card: 'king',
-          suit: 'spades',
-          flipped: false,
-        },
-        {
-          id: 2,
-          card: 'king',
-          suit: 'spades',
-          flipped: false,
-        },
-        {
-          id: 3,
-          card: 'king',
-          suit: 'spades',
-          flipped: false,
-        },
-      ],
-    },
-    // 2
-    {
-      id: 2,
-      data: [
-        {
-          id: 1,
-          card: 'king',
-          suit: 'spades',
-          flipped: false,
-        },
-        {
-          id: 2,
-          card: 'king',
-          suit: 'spades',
-          flipped: false,
-        },
-      ],
-    },
+    // {
+    //   id: 1,
+    //   // 1
+    //   data: [
+    //     {
+    //       id: 1,
+    //       card: 'king',
+    //       suit: 'spades',
+    //       flipped: false,
+    //     },
+    //     {
+    //       id: 2,
+    //       card: 'king',
+    //       suit: 'spades',
+    //       flipped: false,
+    //     },
+    //     {
+    //       id: 3,
+    //       card: 'king',
+    //       suit: 'spades',
+    //       flipped: false,
+    //     },
+    //   ],
+    // },
+    // // 2
+    // {
+    //   id: 2,
+    //   data: [
+    //     {
+    //       id: 1,
+    //       card: 'king',
+    //       suit: 'spades',
+    //       flipped: false,
+    //     },
+    //     {
+    //       id: 2,
+    //       card: 'king',
+    //       suit: 'spades',
+    //       flipped: false,
+    //     },
+    //   ],
+    // },
     // // 3
     // {
     //   id: 3,
@@ -226,6 +236,14 @@ export const state = () => ({
 });
 
 export const mutations = {
+  SET_FIELD(state, items) {
+    state.items = [...items];
+  },
+
+  SET_INIT_FIELD(state, items) {
+    state.initial = [...items];
+  },
+
   FLIP_CARD(state, { idColumn, idCard }) {
     let card;
     try {
@@ -249,7 +267,65 @@ export const mutations = {
   },
 };
 
-export const actions = {};
+export const actions = {
+  GENERATE_FIELD({ commit }, { suitsInGame = 1 }) {
+    let spades;
+    switch (suitsInGame) {
+    case 1: {
+      spades = [
+        ...deck,
+        ...deck,
+        ...deck,
+        ...deck,
+        ...deck,
+        ...deck,
+        ...deck,
+        ...deck,
+      ];
+      break;
+    }
+    default: {
+      spades = [];
+      console.log('Невозможно начать игру с таким количеством мастей');
+      throw 'Невозможно начать игру с таким количеством мастей';
+    }
+    }
+    if (spades.length > 0) {
+      let shuffledArray = shuffle(spades);
+      let indexColumn = 0;
+      const deck = shuffledArray.reduce((acc, item) => {
+        //for (let indexColumn = 1; indexColumn <=8; indexColumn++) {
+
+        // если колонка не существует - создать колонку
+        if (!acc[indexColumn]) {
+          acc.push({
+            id: indexColumn + 1,
+            data: [],
+          });
+          console.log('создана колонка', indexColumn + 1);
+        }
+        // Если колонка существует - добавить в список ее карт новую из перемешанной колоды
+        let columnData = acc[indexColumn].data;
+        columnData.push({
+          id: columnData.length + 1,
+          card: item,
+          // TODO  добавить поддержку двух мастей
+          suit: 'spades',
+          flipped: false,
+        });
+        //}
+        // каждые восемь итераций индекс колонки должен сбрасыватся на ноль
+        indexColumn = (indexColumn + 11) % 10 === 0 ? 0 : indexColumn+1 ;
+        return acc;
+      }, []);
+      console.log('generated deck', deck);
+      commit('SET_INIT_FIELD', deck);
+      commit('SET_FIELD', deck);
+    }
+  },
+
+  RESET_FIELD({ commit }) {},
+};
 
 export const getters = {};
 
