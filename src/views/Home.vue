@@ -34,7 +34,7 @@ export default {
 
   computed: {
     ...mapState({
-      COLUMNS: (state) => state.field.field,
+      COLUMNS: (state) => state.field.items,
     }),
   },
   methods: {},

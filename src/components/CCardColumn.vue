@@ -64,7 +64,6 @@ export default {
     onDrop(event, idColumn) {
       const draggingData = event.dataTransfer.getData('text/plain');
       const draggingDataParsed = JSON.parse(draggingData);
-      console.log('draggingDataParsed', draggingDataParsed);
       this.REMOVE_FROM_COLUMN({
         indexRow: draggingDataParsed.originColumnRowIndex,
         idColumn: draggingDataParsed.originColumnIndex,

@@ -1,11 +1,10 @@
 <template>
   <div class="card" >
     <div class="card__shirt" :class="{ 'card__shirt--flipped': flipped }">
-      <img :src="getImage(back)" class="card__image" alt="рубашка"/>
-<!--      @dragstart="onDragStart($event)" -->
+      <img :src="getShirtImage" class="card__image" alt="рубашка"/>
     </div>
     <div class="card__front" :class="{ 'card__front--flipped': flipped }">
-      <img :src="getImage(front)" class="card__image" alt="карта"/>
+      <img :src="getCardImage(suit, card)" class="card__image" alt="карта"/>
     </div>
   </div>
 </template>
@@ -19,11 +18,11 @@ export default {
       type: Number,
       required: true,
     },
-    back: {
+    suit: {
       type: String,
       required: true,
     },
-    front: {
+    card: {
       type: String,
       required: true,
     },
@@ -39,10 +38,14 @@ export default {
 
     };
   },
-  computed: {},
+  computed: {
+    getShirtImage() {
+      return require(`@/${this.baseImage}/card_wrapper.jpg`);
+    }
+  },
   methods: {
-    getImage(name) {
-      return require(`@/${this.baseImage}/${name}`);
+    getCardImage(suit, name) {
+      return require(`@/${this.baseImage}/cards/${suit}/${name}.png`);
     },
 
   },
