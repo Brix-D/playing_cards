@@ -43,6 +43,9 @@ export default {
       required: true,
     },
   },
+  mounted() {
+    this.flipLastCard();
+  },
   computed: {
 
   },
@@ -85,6 +88,21 @@ export default {
     },
     onFlipCard($event, idColumn, rowIndex) {
       this.FLIP_CARD({ idColumn, idCard: rowIndex});
+    },
+    flipLastCard() {
+      const length = this.cardsList.length;
+      if (!this.cardsList[length - 1].flipped) {
+        this.FLIP_CARD({ idColumn: this.columnId, idCard: length - 1 });
+      }
+    },
+  },
+
+  watch: {
+    /**
+     * следит за списком карт в столбце и переворачивает последнюю карту, если она не перевернута
+     */
+    cardsList() {
+      this.flipLastCard();
     }
   },
 };

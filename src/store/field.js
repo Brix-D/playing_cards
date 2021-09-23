@@ -2,6 +2,8 @@ import deck from '../utils/deck';
 import shuffle from '../utils/shuffle';
 import copyObject from '../utils/copyObject';
 
+const NUMBER_CARDS_ON_START_FIELD = 54;
+
 export const state = () => ({
   /**
    * начальное состояние поля
@@ -55,6 +57,8 @@ export const state = () => ({
     //   ],
     // },
   ],
+  // TODO Колода из которой раздаются дополнительные карты в процессе игры
+  deck: [],
 });
 
 export const mutations = {
@@ -66,6 +70,9 @@ export const mutations = {
     state.initial = copyObject(items);
   },
 
+  SET_DECK(state, items) {
+    state.deck = copyObject(items);
+  },
   /**
    * Переворачивает карточку с нужным id в нужной колонке
    * @param state
@@ -121,7 +128,9 @@ export const actions = {
     if (spades.length > 0) {
       let shuffledArray = shuffle(spades);
       let indexColumn = 0;
-      const deck = shuffledArray.reduce((acc, item) => {
+      const fieldCards = shuffledArray.splice(0, NUMBER_CARDS_ON_START_FIELD);
+      commit('SET_DECK', shuffledArray);
+      const field = fieldCards.reduce((acc, item) => {
 
         // если колонка не существует - создать колонку
         if (!acc[indexColumn]) {
@@ -143,8 +152,8 @@ export const actions = {
         indexColumn = (indexColumn + 11) % 10 === 0 ? 0 : indexColumn+1 ;
         return acc;
       }, []);
-      commit('SET_INIT_FIELD', deck);
-      commit('SET_FIELD', deck);
+      commit('SET_INIT_FIELD', field);
+      commit('SET_FIELD', field);
     }
   },
 
