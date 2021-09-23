@@ -20,6 +20,7 @@
 <script>
 import CCard from '@/components/CCard';
 import { mapMutations } from 'vuex'
+import deck from '@/utils/deck';
 
 export default {
   name: 'CColumn',
@@ -64,14 +65,30 @@ export default {
       return this.cardsList.length-1 === index;
     },
 
+    isCardsDroppable(draggingCards) {
+      const lengthColumn = this.cardsList.length;
+      const lastColumnCard = this.cardsList[lengthColumn - 1];
+      // Если вы колонке 0 карт, то туда можно положить любую карту
+      if (!lastColumnCard) {
+        return true;
+      }
+      const draggingCardsOrder = [draggingCards[0].card, lastColumnCard.card];
+      return deck.join(',').includes(draggingCardsOrder.join(','));
+    },
+
     onDrop(event, idColumn) {
       const draggingData = event.dataTransfer.getData('text/plain');
       const draggingDataParsed = JSON.parse(draggingData);
-      this.REMOVE_FROM_COLUMN({
-        indexRow: draggingDataParsed.originColumnRowIndex,
-        idColumn: draggingDataParsed.originColumnIndex,
-      });
-      this.ADD_TO_COLUMN({ idColumn, items: draggingDataParsed.cardsToDrag});
+      if (this.isCardsDroppable(draggingDataParsed.cardsToDrag)) {
+        this.REMOVE_FROM_COLUMN({
+          indexRow: draggingDataParsed.originColumnRowIndex,
+          idColumn: draggingDataParsed.originColumnIndex,
+        });
+        this.ADD_TO_COLUMN({idColumn, items: draggingDataParsed.cardsToDrag});
+      } else {
+        event.preventDefault();
+        console.log('Карту нельзя положить на это место');
+      }
     },
 
     onDragStart(event, originColumnRowIndex, originColumnIndex) {
@@ -91,8 +108,11 @@ export default {
     },
     flipLastCard() {
       const length = this.cardsList.length;
-      if (!this.cardsList[length - 1].flipped) {
-        this.FLIP_CARD({ idColumn: this.columnId, idCard: length - 1 });
+      const lastCard = this.cardsList[length - 1];
+      if(lastCard) {
+        if (!lastCard.flipped) {
+          this.FLIP_CARD({idColumn: this.columnId, idCard: length - 1});
+        }
       }
     },
   },
