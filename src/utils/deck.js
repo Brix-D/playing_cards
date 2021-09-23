@@ -1,3 +1,8 @@
+/**
+ * Массив всех названий карт в колоде
+ * @type {Array}
+ */
+
 export const deck = Object.freeze([
   'ace',
   'two',

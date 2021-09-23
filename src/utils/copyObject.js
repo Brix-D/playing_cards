@@ -1,10 +1,10 @@
-export function copyObject(obj) {
-  if (null == obj || 'object' != typeof obj) return obj;
-  let copy = obj.constructor();
-  for (let attr in obj) {
-    if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-  }
-  return copy;
+/**
+ * Создает глубокую копию объекта
+ * @param object {Object} Исходный объект
+ * @returns {Object} Копия объекта
+ */
+export function copyObject(object) {
+  return JSON.parse(JSON.stringify(object));
 }
 
 export default copyObject;

@@ -1,7 +1,7 @@
 /**
  * Перемешивает массив случайным образом
- * @param array
- * @returns {array}
+ * @param array Исходный массив
+ * @returns {array} Перемешанный массив
  */
 export function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
