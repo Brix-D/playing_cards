@@ -58,6 +58,7 @@ export default {
   width: 100%;
   transform-style: preserve-3d;
   cursor: pointer;
+  user-select: none;
 
 
   &__shirt {
