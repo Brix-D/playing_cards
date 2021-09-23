@@ -66,6 +66,12 @@ export const mutations = {
     state.initial = copyObject(items);
   },
 
+  /**
+   * Переворачивает карточку с нужным id в нужной колонке
+   * @param state
+   * @param idColumn {Number} id столбца от 1 до 10
+   * @param idCard {Number} индекс карты в столбце
+   */
   FLIP_CARD(state, { idColumn, idCard }) {
     let card;
     try {
@@ -123,7 +129,6 @@ export const actions = {
             id: indexColumn + 1,
             data: [],
           });
-          console.log('создана колонка', indexColumn + 1);
         }
         // Если колонка существует - добавить в список ее карт новую из перемешанной колоды
         let columnData = acc[indexColumn].data;
@@ -138,7 +143,6 @@ export const actions = {
         indexColumn = (indexColumn + 11) % 10 === 0 ? 0 : indexColumn+1 ;
         return acc;
       }, []);
-      console.log('generated deck', deck);
       commit('SET_INIT_FIELD', deck);
       commit('SET_FIELD', deck);
     }
