@@ -12,12 +12,13 @@
     <div class="actions">
       <button @click="newGame">Новая игра</button>
       <button @click="resetGame">Начать с начала</button>
+      <button @click="dealCards">Раздать карты</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions, mapMutations} from 'vuex';
 import CCardColumn from '@/components/CCardColumn';
 export default {
   name: 'Home',
@@ -47,11 +48,17 @@ export default {
       NEW_GAME: 'field/GENERATE_FIELD',
       RESET_GAME: 'field/RESET_FIELD',
     }),
+    ...mapMutations({
+      DEAL_CARDS: 'field/DEAL_CARDS',
+    }),
     newGame() {
       this.NEW_GAME({suitsInGame: 1});
     },
     resetGame() {
       this.RESET_GAME();
+    },
+    dealCards() {
+      this.DEAL_CARDS();
     },
   },
 };

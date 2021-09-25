@@ -58,7 +58,8 @@ export const state = () => ({
     // },
   ],
   // TODO Колода из которой раздаются дополнительные карты в процессе игры
-  deck: [],
+  initDeck: {},
+  deck: {},
 });
 
 export const mutations = {
@@ -72,6 +73,9 @@ export const mutations = {
 
   SET_DECK(state, items) {
     state.deck = copyObject(items);
+  },
+  SET_INIT_DECK(state, items) {
+    state.initDeck = copyObject(items);
   },
   /**
    * Переворачивает карточку с нужным id в нужной колонке
@@ -100,6 +104,23 @@ export const mutations = {
   ADD_TO_COLUMN(state, { idColumn, items }) {
     state.items.find((column) => column.id === idColumn).data.push(...items);
   },
+
+  DEAL_CARDS(state) {
+    console.log('rest deck', state.deck);
+    console.log('rest deck length', state.deck.length);
+    const deck = state.deck;
+    const field = state.items;
+
+    field.forEach((column) => {
+      const card = deck.pop();
+      if (card) {
+        card.id = column.data.length + 1;
+        card.flipped = !card.flipped;
+        column.data.push(card);
+      }
+    });
+  },
+
 };
 
 export const actions = {
@@ -108,9 +129,9 @@ export const actions = {
     let gameDeck = new Deck(suitsInGame);
     // перемешать
     gameDeck.shuffleDeck();
-    console.log('shuffled', gameDeck.deck);
     // разделить на колоду и поле
     const fieldCards = gameDeck.divideDeck();
+    commit('SET_INIT_DECK', gameDeck.deck);
     commit('SET_DECK', gameDeck.deck);
     // раздать начальные карты
     const field = gameDeck.dealCardsInit(fieldCards);
@@ -121,7 +142,10 @@ export const actions = {
 
   RESET_FIELD({ commit, state }) {
     commit('SET_FIELD', state.initial);
+    commit('SET_DECK', state.initDeck);
   },
+
+
 };
 
 export const getters = {

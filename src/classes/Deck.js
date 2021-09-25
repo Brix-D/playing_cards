@@ -100,10 +100,6 @@ export class Deck {
       return acc;
     }, []);
   }
-
-  dealCardsAdditional(currentField) {
-
-  }
 }
 
 export default Deck;
