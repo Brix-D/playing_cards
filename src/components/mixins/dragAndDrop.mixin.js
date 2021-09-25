@@ -1,4 +1,4 @@
-import deck from '@/utils/deck';
+import deck from '@/utils/deckValues';
 
 export default {
   methods: {
@@ -10,12 +10,12 @@ export default {
       if (!lastColumnCard) {
         return true;
       }
-      const draggingCardsOrder = [draggingCards[0].card, lastColumnCard.card];
+      const draggingCardsOrder = [draggingCards[0].value, lastColumnCard.value];
       return deck.join(',').includes(draggingCardsOrder.join(','));
     },
 
     isDragRightOrder(cardsToDrag) {
-      const columnCards = cardsToDrag.map((item) => item.card).reverse().join(',');
+      const columnCards = cardsToDrag.map((item) => item.value).reverse().join(',');
       return deck.join(',').includes(columnCards);
     },
 

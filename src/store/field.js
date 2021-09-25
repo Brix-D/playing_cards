@@ -1,8 +1,8 @@
-import deck from '../utils/deck';
+import deck from '../utils/deckValues';
 import shuffle from '../utils/shuffle';
 import copyObject from '../utils/copyObject';
+import Deck from '../classes/Deck'
 
-const NUMBER_CARDS_ON_START_FIELD = 54;
 
 export const state = () => ({
   /**
@@ -104,57 +104,19 @@ export const mutations = {
 
 export const actions = {
   GENERATE_FIELD({ commit }, { suitsInGame = 1 }) {
-    let spades;
-    switch (suitsInGame) {
-    case 1: {
-      spades = [
-        ...deck,
-        ...deck,
-        ...deck,
-        ...deck,
-        ...deck,
-        ...deck,
-        ...deck,
-        ...deck,
-      ];
-      break;
-    }
-    default: {
-      spades = [];
-      console.log('Невозможно начать игру с таким количеством мастей');
-      throw 'Невозможно начать игру с таким количеством мастей';
-    }
-    }
-    if (spades.length > 0) {
-      let shuffledArray = shuffle(spades);
-      let indexColumn = 0;
-      const fieldCards = shuffledArray.splice(0, NUMBER_CARDS_ON_START_FIELD);
-      commit('SET_DECK', shuffledArray);
-      const field = fieldCards.reduce((acc, item) => {
-
-        // если колонка не существует - создать колонку
-        if (!acc[indexColumn]) {
-          acc.push({
-            id: indexColumn + 1,
-            data: [],
-          });
-        }
-        // Если колонка существует - добавить в список ее карт новую из перемешанной колоды
-        let columnData = acc[indexColumn].data;
-        columnData.push({
-          id: columnData.length + 1,
-          card: item,
-          // TODO  добавить поддержку двух мастей
-          suit: 'spades',
-          flipped: false,
-        });
-        // каждые десять итераций индекс колонки должен сбрасыватся на ноль
-        indexColumn = (indexColumn + 11) % 10 === 0 ? 0 : indexColumn+1 ;
-        return acc;
-      }, []);
-      commit('SET_INIT_FIELD', field);
-      commit('SET_FIELD', field);
-    }
+    // создать колоду карт
+    let gameDeck = new Deck(suitsInGame);
+    // перемешать
+    gameDeck.shuffleDeck();
+    console.log('shuffled', gameDeck.deck);
+    // разделить на колоду и поле
+    const fieldCards = gameDeck.divideDeck();
+    commit('SET_DECK', gameDeck.deck);
+    // раздать начальные карты
+    const field = gameDeck.dealCardsInit(fieldCards);
+    commit('SET_INIT_FIELD', field);
+    commit('SET_FIELD', field);
+    // }
   },
 
   RESET_FIELD({ commit, state }) {

@@ -48,7 +48,7 @@ export default {
       RESET_GAME: 'field/RESET_FIELD',
     }),
     newGame() {
-      this.NEW_GAME({});
+      this.NEW_GAME({suitsInGame: 1});
     },
     resetGame() {
       this.RESET_GAME();

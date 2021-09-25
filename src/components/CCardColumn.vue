@@ -20,7 +20,7 @@
 <script>
 import CCard from '@/components/CCard';
 import { mapMutations } from 'vuex'
-import deck from '@/utils/deck';
+import deck from '@/utils/deckValues';
 import dragAndDropMixin from './mixins/dragAndDrop.mixin';
 
 export default {

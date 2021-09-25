@@ -4,7 +4,7 @@
       <img :src="getShirtImage" class="card__image" alt="рубашка"/>
     </div>
     <div class="card__front" :class="{ 'card__front--flipped': flipped }">
-      <img :src="getCardImage(suit, card)" class="card__image" alt="карта"/>
+      <img :src="getCardImage(suit, value)" class="card__image" alt="карта"/>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       type: String,
       required: true,
     },
-    card: {
+    value: {
       type: String,
       required: true,
     },
